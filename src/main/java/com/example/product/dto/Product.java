@@ -1,12 +1,22 @@
 package com.example.product.dto;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
+
+@Document(collection = "product")
 public class Product {
+    @Id
     private Integer id;
     private String name;
     private Category category;
+    private String currency;
     private double price;
     private double discount;
     private String discountDescription;
+
+    private List<String> imageURLs;
 
     public Integer getId() {
         return id;
@@ -36,6 +46,14 @@ public class Product {
         return price;
     }
 
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
     public void setPrice(double price) {
         this.price = price;
     }
@@ -54,5 +72,13 @@ public class Product {
 
     public void setDiscountDescription(String discountDescription) {
         this.discountDescription = discountDescription;
+    }
+
+    public List<String> getImageURLs() {
+        return imageURLs;
+    }
+
+    public void setImageURLs(List<String> imageURLs) {
+        this.imageURLs = imageURLs;
     }
 }

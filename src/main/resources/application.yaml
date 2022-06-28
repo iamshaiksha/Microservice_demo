@@ -5,3 +5,8 @@ server:
 spring:
   application:
     name: Product service
+  data:
+    mongodb:
+      database: shopping
+      host: localhost
+      port: 27017

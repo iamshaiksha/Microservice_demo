@@ -1,6 +1,8 @@
 package com.example.product.service;
 
 import com.example.product.dto.Product;
+import com.example.product.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
@@ -10,48 +12,35 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
+    @Autowired
+    private ProductRepository productRepository;
     List<Product> products=new ArrayList<>();
     public String addProduct(Product product) {
-        products.add(product);
+        productRepository.save(product);
     return "success";
     }
 
     public List<Product> listAllProducts() {
-        return products;
+        return productRepository.findAll();
     }
 
     public List<Product> producCategorytList(String category) {
-        return products.stream().filter(product -> product.getCategory().getName().equalsIgnoreCase(category)).
-                collect(Collectors.toList());
+       return productRepository.finProductByCategory(category);
     }
 
     public Product productIdList(Integer id) {
-        return products.stream().filter(product -> product.getId()==id).findAny().get();
+       return productRepository.findById(id).get();
     }
 
     public String updateProduct(Product product) {
-        for(Product prod:products)
-        {
-            if(prod.getId()==product.getId()) {
-                prod.setName(product.getName());
-                prod.setCategory(product.getCategory());
-                prod.setDiscount(product.getDiscount());
-                prod.setDiscountDescription(product.getDiscountDescription());
+
+                productRepository.save(product);
                 return "product updated successfully";
-            }
-        }
-        return "product updation failed";
+
     }
 
     public String deleteProductById(Integer id) {
-        for (Product product:products)
-        {
-            if(product.getId()==id)
-            {
-                products.remove(product);
-                return "product deleted successfully";
-            }
-        }
-        return "product deletion failed";
+        productRepository.deleteById(id);
+        return "product deleted successfully";
     }
 }
