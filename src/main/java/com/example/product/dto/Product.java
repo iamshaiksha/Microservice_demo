@@ -1,84 +1,40 @@
 package com.example.product.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Document(collection = "product")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Product {
     @Id
     private Integer id;
+    @NotNull(message= "product name should not be null")
     private String name;
+
+    @NotNull(message = "message cannot be null")
     private Category category;
+
     private String currency;
+    @Min(0)
     private double price;
+    @Max(100)
     private double discount;
+
     private String discountDescription;
 
     private List<String> imageURLs;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(double discount) {
-        this.discount = discount;
-    }
-
-    public String getDiscountDescription() {
-        return discountDescription;
-    }
-
-    public void setDiscountDescription(String discountDescription) {
-        this.discountDescription = discountDescription;
-    }
-
-    public List<String> getImageURLs() {
-        return imageURLs;
-    }
-
-    public void setImageURLs(List<String> imageURLs) {
-        this.imageURLs = imageURLs;
-    }
 }
