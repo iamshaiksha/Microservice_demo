@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(OfferNotValidException.class)
+    @ExceptionHandler({OfferNotValidException.class,CurrencyNotValidException.class})
     public ResponseEntity<?> offerNotvalidHandler(Exception exc, ServletWebRequest servletWebRequest) {
         APIError apiError = new APIError();
         apiError.setTimestamp(LocalDateTime.now());

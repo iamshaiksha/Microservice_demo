@@ -19,11 +19,11 @@ import java.util.List;
 @ToString
 public class Product {
     @Id
-    private Integer id;
+    private String id;
     @NotNull(message= "product name should not be null")
     private String name;
 
-    @NotNull(message = "message cannot be null")
+    @NotNull(message = "product of category message cannot be null ")
     private Category category;
 
     private String currency;
