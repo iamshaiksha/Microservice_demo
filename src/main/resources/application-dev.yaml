@@ -1,0 +1,9 @@
+
+server:
+  port: 9092
+spring:
+  application:
+    name: Product service in dev environment
+product:
+  currencies:
+    -INR
