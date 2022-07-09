@@ -17,6 +17,14 @@ product:
     -INR
     -USD
     -EUR
+logging:
+  file:
+    name: d:\logs\product.log
+  logback:
+    rollingpolicy:
+      max-file-size: 100KB
+  level:
+    root: debug
 
 ---
 server:

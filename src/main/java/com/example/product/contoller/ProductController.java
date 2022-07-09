@@ -4,35 +4,42 @@ import com.example.product.dto.Product;
 import com.example.product.exception.CurrencyNotValidException;
 import com.example.product.exception.OfferNotValidException;
 import com.example.product.service.ProductService;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @Slf4j
 @RequestMapping("/v1")
 public class ProductController {
+    private static final ObjectMapper objectmapper=new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
     private ProductService productService;
     public ProductController(ProductService productService) {
         this.productService=productService;
     }
 
     @PostMapping("/addproduct")
-    public ResponseEntity<Product> addProduct(@RequestBody @Valid Product product){
+    public ResponseEntity<Product> addProduct(@RequestBody @Valid Product product) throws JsonProcessingException {
+        log.info("Reqeusting product-:{}",objectmapper.writeValueAsString(product));
         String status=productService.addProduct(product);
-        log.info("Product added status", status);
+        log.info("Product added status-",status);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
     @GetMapping("/getallproducts")
     public List<Product> productList()
     {
-        return productService.listAllProducts();
+        log.info("Listing product");
+       List<Product> productList=  productService.listAllProducts();
+       log.info("All the products returned-",productList);
+        return productList;
     }
     @GetMapping("/productList/{category}")
     public List<Product> producCategorytList(@PathVariable String category)
